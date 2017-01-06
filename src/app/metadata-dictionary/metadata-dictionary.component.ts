@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {Response, Http} from "@angular/http";
 
 @Component({
@@ -31,6 +31,7 @@ import {Response, Http} from "@angular/http";
     </div>
   </div>
  </div>
+ <br>
   <!--If data elements-->
  <div class="panel-group" id="accordion2" *ngIf="isDataelements">
   <div class="panel panel-default" *ngFor="let dataelement of dataelements">
@@ -64,6 +65,7 @@ import {Response, Http} from "@angular/http";
     </div>
   </div>
  </div>
+ <br>
  <!--If dataset-->
   <div class="panel-group" id="accordion3" *ngIf="isDataset">
   <div class="panel panel-default" *ngFor="let dataset of datasets">
@@ -103,6 +105,7 @@ export class MetadataDictionaryComponent implements OnInit {
   private isIndicator=false;
   private isDataelements=false;
   private isDataset=false;
+  @Input() metadataidentifiers:string;
 
   constructor(private http:Http) {
     this.indicators=[];
@@ -111,7 +114,8 @@ export class MetadataDictionaryComponent implements OnInit {
   }
 
   ngOnInit() {
-    const uid='UbnP1Kth7oJ;hk8DwZuW4Ay;tl85FnvL8do;Q7zFIIoqCdI;zeEp4Xu2GOm;GzvLb3XVZbR';
+    //console.log(this.metadataidentifiers);
+    const uid=this.metadataidentifiers;
     this.displayDetail(uid)
 
   }

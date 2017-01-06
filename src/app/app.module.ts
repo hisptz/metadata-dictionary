@@ -6,7 +6,6 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import {DhisMenuComponent} from "./dhis-menu/ng2-dhis-menu";
 import { MetadataDictionaryComponent } from './metadata-dictionary/metadata-dictionary.component';
-import {MetadataDictionaryService} from "./metadata-dictionary/metadata-dictionary.service";
 
 @NgModule({
   declarations: [
@@ -19,7 +18,7 @@ import {MetadataDictionaryService} from "./metadata-dictionary/metadata-dictiona
     FormsModule,
     HttpModule
   ],
-  providers: [MetadataDictionaryService],
+  providers: [ ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
