@@ -45,9 +45,8 @@
   <div class="container-fluid">
     <div class="col-sm-2" *ngFor="let indicator of indicators | searchBy:{name:search} | paginate: { itemsPerPage: 12, currentPage: p } ">
       <div class="panel panel-default  group_details" (click)="viewIndicatorDetail(indicator.id,indicator.name,'info')" style="height: 500px;cursor: pointer">
-        <div class="panel-heading">
-          <h5 class="text-center" style="height: 60px">{{ indicator?.name }}</h5>
-        </div>
+      <h5 class="text-center" style="height: 60px">{{ indicator?.name }}</h5>
+        <hr>
         <div class="panel-body"  title="Click to see indicator details">
           <div class="media" style="height: 50px;border-bottom: 1px solid rgba(0,0,0,0.1);">
             <div class="media-body">
