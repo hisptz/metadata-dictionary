@@ -27,7 +27,7 @@ const routes: Routes = [
   { path: 'indicators', component:IndicatortogroupComponent},
   { path: 'indicators/:indgroupId', component:IndicatortogroupComponent}
   //{ path: '**',redirectTo: 'IndicatorgroupsComponent' }
-  ]
+]
 @NgModule({
   declarations: [
     AppComponent,
