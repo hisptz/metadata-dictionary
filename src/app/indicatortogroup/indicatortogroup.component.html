@@ -1,0 +1,167 @@
+<div class="row" style="margin: 20px">
+  <div class="container-fluid">
+    <div class="col-sm-6">
+      <ol class="breadcrumb">
+        <li><a routerLink="/" routerLinkActive="active" ><i class="fa fa-home"></i> Home</a></li>
+        <li *ngIf="!breadCrum" class="active">Indicators</li>
+        <li *ngIf="breadCrum"><a routerLink="/indicators">Indicators</a></li>
+        <li *ngIf="breadCrum && indicatorNameInList!=''" class="active">{{indicatorNameInList}}</li>
+      </ol>
+    </div>
+    <div class="col-sm-4">
+      <input type="text" placeholder="Search groups by name..." class="form-control" [(ngModel)]="search">
+    </div>
+    <div class="col-sm-2">
+      <div class="dropdown pull-right">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <i class="fa fa-cogs"></i>
+          <span class="caret"></span>
+        </button>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <form #f="ngForm" class="form-horizontal">
+            <div class="col-sm-offset-1 col-sm-10">
+            <div class="radio">
+              <label>
+                <input type="radio" name="list" value="grid" [(ngModel)]="myList" id="optionsRadios1">
+                List in Grids
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="list" value="order" [(ngModel)]="myList" id="optionsRadios2">
+                List in Order
+              </label>
+            </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" style="margin: 20px" *ngIf="myList=='grid'" >
+  <div class="container-fluid">
+    <div class="col-sm-2" *ngFor="let indicator of indicators | searchBy:{name:search} | paginate: { itemsPerPage: 12, currentPage: p } ">
+      <div class="panel panel-default  group_details" (click)="viewIndicatorDetail(indicator.id,indicator.name,'info')" style="height: 500px;cursor: pointer">
+        <div class="panel-heading">
+          <h5 class="text-center" style="height: 60px">{{ indicator?.name }}</h5>
+        </div>
+        <div class="panel-body"  title="Click to see indicator details">
+          <div class="media" style="height: 50px;border-bottom: 1px solid rgba(0,0,0,0.1);">
+            <div class="media-body">
+              <h5 class="media-heading"><i class="fa fa-unlink"></i> <b>Type</b></h5>
+              <p>{{ indicator.indicatorType?.name || "No Name" }}</p>
+            </div>
+          </div>
+          <div class="media" style="min-height: 50px;border-bottom: 1px solid rgba(0,0,0,0.1);cursor: pointer" title="click for more descrption" >
+            <div class="media-body">
+              <h5 class="media-heading"><i class="fa fa-sort-up"></i> <b>Numerator Description</b> </h5>
+              <p>{{indicator?.numeratorDescription}}</p>
+            </div>
+          </div>
+          <div class="media" style="min-height: 50px;border-bottom: 1px solid rgba(0,0,0,0.1);cursor: pointer" title="click for more descrption" >
+            <div class="media-body">
+              <h5 class="media-heading"><i class="fa fa-sort-up"></i> <b>Denominator Description</b> </h5>
+              <p>{{indicator?.denominatorDescription}}</p>
+            </div>
+          </div>
+          <div class="media" style="height: 50px;border-bottom: 1px solid rgba(0,0,0,0.1);">
+            <div class="media-body">
+              <h5 class="media-heading"><i class="fa fa-user"></i> <b>Created By</b></h5>
+              <p>{{ indicator.user?.name || "None"}}</p>
+            </div>
+          </div>
+          <div class="media" style="height: 50px">
+            <div class="media-body">
+              <h5 class="media-heading"><i class="fa fa-calendar"></i> <b>Created On</b></h5>
+              <p>{{ indicator?.lastUpdated | date }}</p>
+            </div>
+          </div>
+          <!--<p class="text-center"> <button class="btn btn-default btn-sm" (click)="loadAllIndicators()" title="click to see more indicators">More indicators</button></p>-->
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="text-center">
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+</div>
+<div class="row" style="margin: 20px" *ngIf="myList=='order'">
+  <div class="container-fluid">
+    <div [ngClass]="defaultClass">
+    <div class="list-group" title="click for more details">
+      <a  (click)="indicatorDetailsinList(indicator.id,indicator.name,'cardinfo')" class="list-group-item" [ngClass]="{active:actvalteLink==indicator.id}" *ngFor="let indicator of indicators  | searchBy:{name:search} | paginate: { itemsPerPage: 6, currentPage: p } let in = first">
+        <h4 class="list-group-item-heading">{{indicator?.name}}</h4>
+         <p class="list-group-item-text"><span ><b>Type</b></span>&nbsp;&nbsp; {{ indicator.indicatorType?.name || "No Name" }}</p>
+         <p *ngIf="indicator.numeratorDescription" class="list-group-item-text"><span><b>Numerator Description</b></span> &nbsp;&nbsp;{{indicator?.numeratorDescription}}</p>
+         <p *ngIf="indicator.denominatorDescription" class="list-group-item-text"><span><b>Denominator Description</b></span> &nbsp;&nbsp;{{indicator?.denominatorDescription}}</p>
+         <p *ngIf="indicator.user.name" class="list-group-item-text"><span><b>Created By</b></span> {{ indicator.user?.name || "None"}}</p>
+         <p *ngIf="indicator.lastUpdated" class="list-group-item-text"><span><b>Last update on</b></span> {{ indicator?.lastUpdated | date }}</p>
+     </a>
+    </div>
+      <div class="text-center">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+   </div>
+    <div *ngIf="actvalteLink!=''" [ngClass]="defaultClassWhenActivated">
+      <p-tabView>
+        <p-tabPanel header="Details" leftIcon="fa-book">
+          <app-metadata-dictionary [metadataidentifiers]="actvalteLink"></app-metadata-dictionary>
+        </p-tabPanel>
+        <p-tabPanel header="Analyse" leftIcon="fa-bar-chart">
+          <div class="row">
+            <p-toolbar>
+              <div class="ui-toolbar-group-left">
+                <button type="button" label="New" icon="fa-plus">OrgUnits</button>
+                <button type="button" label="Open" icon="fa-folder-open">Period</button>
+              </div>
+
+              <div class="ui-toolbar-group-right">
+                <button pButton type="button" icon="fa-refresh">Update</button>
+              </div>
+            </p-toolbar>
+            {{actvalteLink}}
+          </div>
+
+        </p-tabPanel>
+      </p-tabView>
+    </div>
+  </div>
+
+</div>
+<div *ngIf="indicatorDetail=='info'">
+  <p-dialog header="{{indicatorName}}" [(visible)]="displayIndicator" modal="modal"  width="1200"  responsive="true">
+    <p-tabView>
+      <p-tabPanel header="Details" leftIcon="fa-book">
+        <app-metadata-dictionary [metadataidentifiers]="indicatorIdentifier"></app-metadata-dictionary>
+      </p-tabPanel>
+      <p-tabPanel header="Analyse" leftIcon="fa-bar-chart">
+        <div class="row">
+          <p-toolbar>
+            <div class="ui-toolbar-group-left">
+              <button type="button" label="New" icon="fa-plus">OrgUnits</button>
+              <button type="button" label="Open" icon="fa-folder-open">Period</button>
+            </div>
+
+            <div class="ui-toolbar-group-right">
+              <button pButton type="button" icon="fa-refresh">Update</button>
+            </div>
+          </p-toolbar>
+
+        </div>
+
+      </p-tabPanel>
+    </p-tabView>
+
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+        <button type="button" class="btn btn-default" (click)="cancelDialog()" label="No">Cancel</button>
+        <!--<button type="button" class="btn btn-default" (click)="display=false" label="Yes">Yes</button>-->
+      </div>
+    </p-footer>
+  </p-dialog>
+</div>
+
