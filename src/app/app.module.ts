@@ -12,20 +12,22 @@ import {Routes, PreloadAllModules, RouterModule} from "@angular/router";
 import { IndicatortogroupComponent } from './indicatortogroup/indicatortogroup.component';
 import {CanActivateViaIndicators} from "./shared/can-activate-via-indicators";
 import { HomeComponent } from './home/home.component';
-import {DialogModule} from "primeng/components/dialog/dialog";
 import {MetadataDictionaryComponent} from "./metadatadictionarycomponent/metadata-dictionary.component";
-import {TabViewModule} from "primeng/components/tabview/tabview";
-import {TooltipModule} from "primeng/components/tooltip/tooltip";
-import {PanelMenuModule} from "primeng/components/panelmenu/panelmenu";
-import {ToolbarModule} from "primeng/components/toolbar/toolbar";
-
+import {Constants} from "./shared/costants";
+import {DashboardItemSearchComponent} from "./dashboard-item-search/dashboard-item-search.component";
+import {DashboardSearchService} from "./shared/dashboard-search.service";
+import {ReadableNamePipe} from "./shared/pipes/readable-name.pipe";
+import {TruncatePipe} from "./shared/pipes/truncate.pipe";
+import {FilterService} from "./shared/filter.service";
+import {VisulizerService} from "./ng2-dhis-visualizer/visulizer.service";
+import {Ng2DhisVisualizerComponent} from "./ng2-dhis-visualizer/ng2-dhis-visulizer.component";
 const routes: Routes = [
   { path: '', component: HomeComponent , pathMatch: 'full', children:[
     { path: '', component:IndicatorgroupsComponent},
 
   ] },
-  { path: 'indicators', component:IndicatortogroupComponent},
-  { path: 'indicators/:indgroupId', component:IndicatortogroupComponent}
+  { path: 'metadata/:metadataid', component:IndicatortogroupComponent}
+  //{ path: 'indicators/:indgroupId', component:IndicatortogroupComponent}
   //{ path: '**',redirectTo: 'IndicatorgroupsComponent' }
 ]
 @NgModule({
@@ -36,7 +38,11 @@ const routes: Routes = [
     SearchPipe,
     IndicatortogroupComponent,
     HomeComponent,
-    MetadataDictionaryComponent
+    MetadataDictionaryComponent,
+    DashboardItemSearchComponent,
+    ReadableNamePipe,
+    TruncatePipe,
+    Ng2DhisVisualizerComponent
 
   ],
   imports: [
@@ -45,14 +51,9 @@ const routes: Routes = [
     HttpModule,
     RouterModule.forRoot(routes, { useHash: true}),
     Ng2PaginationModule,
-    DialogModule,
-    TabViewModule,
-    TooltipModule,
-    PanelMenuModule,
-    ToolbarModule
 
   ],
-  providers: [IndicatorService,CanActivateViaIndicators],
+  providers: [IndicatorService,CanActivateViaIndicators,Constants,DashboardSearchService,FilterService,VisulizerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

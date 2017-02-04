@@ -15,8 +15,10 @@ export class IndicatorgroupsComponent implements OnInit {
     search = "";
     private loading:boolean;
     private indicatorGroups=[];
-    private indicatorGroupsSummary=[];
-    private indicatorGroupSetSummary=[];
+    private dataElementSummary=[];
+    private eventDataSummary=[];
+    private programIndicatorSummary=[];
+    private dataSetSummary=[];
     private indicatorSummary=[];
     private params:boolean;
     display: boolean = false;
@@ -28,9 +30,11 @@ export class IndicatorgroupsComponent implements OnInit {
     this.loading=false
     this.indicatorName=''
     this.indicatorGroups=[];
-    this.indicatorGroupsSummary=[];
+    this.dataElementSummary=[];
     this.indicatorSummary=[];
-    this.indicatorGroupSetSummary=[];
+    this.dataSetSummary=[];
+    this.eventDataSummary=[];
+    this.programIndicatorSummary=[];
     this.params=false
     this.indicatorDetail=''
     this.indicatorIdentifier='';
@@ -40,12 +44,16 @@ export class IndicatorgroupsComponent implements OnInit {
     this.loading=true
     this.indicatorGroupService.loadBothIndicatorGroupsAndGroupSet()
         .subscribe(groupresult=>{
-            this.indicatorGroupsSummary=groupresult[1];
+            this.dataElementSummary=groupresult[1];
             this.indicatorSummary=groupresult[0];
-            this.indicatorGroupSetSummary=groupresult[2];
-            console.log(this.indicatorGroupsSummary);
-            console.log(this.indicatorSummary);
-            console.log(this.indicatorGroupSetSummary);
+            this.dataSetSummary=groupresult[2];
+            this.eventDataSummary=groupresult[3];
+            this.programIndicatorSummary=groupresult[4];
+            // console.log(this.dataElementSummary);
+            // console.log(this.indicatorSummary);
+            // console.log(this.dataSetSummary);
+            // console.log(this.eventDataSummary);
+            // console.log(this.programIndicatorSummary);
         },
         error=>{
             console.log("Something wrong need to be fixed");

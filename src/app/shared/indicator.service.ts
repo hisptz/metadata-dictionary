@@ -22,10 +22,12 @@ export class IndicatorService {
   }
   // Get both,indicators,group and groupset
   loadBothIndicatorGroupsAndGroupSet(){
-      let indicators=this.http.get('../../../api/indicators.json?fields=id,name,numerator,denominator,indicatorType[name],denominatorDescription,numeratorDescription,user[name],lastUpdated&paging=true&pageSize=4').map((res:Response)=>res.json())
-      let indicatorGroups=this.http.get('../../../api/indicatorGroups.json?fields=created,user[id,name],id,name,indicators[id,name,numerator,denominator,indicatorType[name],denominatorDescription,numeratorDescription,user[name],lastUpdated]&paging=true&pageSize=4').map((res:Response)=>res.json())
-      let indicatorGroupSet=this.http.get('../../../api/indicatorGroupSets.json?fields=id,created,lastUpdated,name,indicatorGroups[id,name]&paging=true&pageSize=4').map((res:Response)=>res.json())
-   return Observable.forkJoin(indicators,indicatorGroups,indicatorGroupSet)
+      let indicators=this.http.get('../../../api/indicators.json?paging=true&pageSize=4').map((res:Response)=>res.json())
+      let dataElements=this.http.get('../../../api/dataElements.json?paging=true&pageSize=4').map((res:Response)=>res.json())
+      let dataSets=this.http.get('../../../api/dataSets.json?paging=true&pageSize=4').map((res:Response)=>res.json())
+      let eventData=this.http.get('../../../api/programs.json?paging=true&pageSize=4').map((res:Response)=>res.json())
+      let programIndicator=this.http.get('../../../api/programIndicators.json?paging=true&pageSize=4').map((res:Response)=>res.json())
+   return Observable.forkJoin(indicators,dataElements,dataSets,eventData,programIndicator)
        .catch(this.handleError)
   }
   private handleError (error: Response | any) {

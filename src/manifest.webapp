@@ -1,0 +1,24 @@
+{
+    "version": "0.1",
+    "name": "Indicator Dictionary",
+    "description": "Indicator Dictionary",
+    "launch_path": "index.html",
+    "icons": {
+        "16": "icon.png",
+        "48": "icon.png",
+        "128": "icon.png"
+    },
+    "developer": {
+        "name": "HISP Tanzania",
+        "url": "http://hisptanzania.org/"
+    },
+    "default_locale": "en",
+    "activities": {
+        "dhis": {
+            "href": "../../.."
+        },
+        "build": {
+           "command":"ng build -dev && cp -f -r dist/* ~/dhis-home/apps/score"
+        }
+    }
+}

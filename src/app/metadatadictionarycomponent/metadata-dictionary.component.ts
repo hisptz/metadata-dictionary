@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, SimpleChange,OnChanges} from '@angular/core';
 import {Response, Http, Headers} from "@angular/http";
 import {Observable, Subscription} from "rxjs";
 
@@ -37,11 +37,12 @@ export class MetadataDictionaryComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.metadataidentifiers);
+    //console.log(this.metadataidentifiers);
     const uid=this.metadataidentifiers;
     console.log(this.metadataFromAnalyticsLink(uid));
     this.displayDetail(uid);
   }
+
   displayDetail(uid){
     this.showingLoading=true;
     var self=this.http;
