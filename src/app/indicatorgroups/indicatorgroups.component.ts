@@ -49,11 +49,6 @@ export class IndicatorgroupsComponent implements OnInit {
             this.dataSetSummary=groupresult[2];
             this.eventDataSummary=groupresult[3];
             this.programIndicatorSummary=groupresult[4];
-            // console.log(this.dataElementSummary);
-            // console.log(this.indicatorSummary);
-            // console.log(this.dataSetSummary);
-            // console.log(this.eventDataSummary);
-            // console.log(this.programIndicatorSummary);
         },
         error=>{
             console.log("Something wrong need to be fixed");

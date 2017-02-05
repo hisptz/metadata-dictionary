@@ -13,11 +13,7 @@
    </div>
 
 </div>
-  <div class="row" style="margin: 20px" *ngIf="loading">
-    <div class="text-center">
-      <img src="balls-5.svg" style="padding-top: 80px; height: 190px;">
-    </div>
-  </div>
+
 <div class="row" style="margin: 80px" *ngIf="!loading" >
   <br>
 
@@ -98,7 +94,9 @@
     </div>
   </div>
 <!--Model to be populated when clicked-->
-<div *ngIf="indicatorDetail=='info'">
-
 </div>
+<div class="row" style="margin: 20px" *ngIf="loading">
+  <div class="text-center">
+    <img src="balls-5.svg" style="padding-top: 80px; height: 190px;">
+  </div>
 </div>

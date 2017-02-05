@@ -9,16 +9,6 @@
         <b>No search result found</b>
       </div>
     </div>
-    <!--<div class="panel search-panel" *ngIf="messageCount > 0">-->
-      <!--<div class="panel-body alert-info" style="padding-top: 3px; padding-bottom: 3px; margin-bottom: 0px;">-->
-        <!--<table width="100%" class="search-table">-->
-          <!--<tr>-->
-            <!--<td width="94%"><b>You have {{messageCount}} message{{messageCount > 1 ? 's' : ' '}}</b></td>-->
-            <!--<td width="6%"><button class="btn btn-info btn-xs pull-right disabled" (click)="addDashboardItem(header.name, item.id)">ADD</button></td>-->
-          <!--</tr>-->
-        <!--</table>-->
-      <!--</div>-->
-    <!--</div>-->
     <div class="panel search-panel" *ngFor="let header of headers">
       <div class="panel-heading search-title" style="padding-bottom: 0px;">
         <h6>

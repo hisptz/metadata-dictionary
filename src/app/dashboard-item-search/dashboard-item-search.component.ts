@@ -3,6 +3,7 @@ import {Observable, Subject} from "rxjs";
 import {isObject} from "util";
 import {ActivatedRoute} from "@angular/router";
 import {DashboardSearchService} from "../shared/dashboard-search.service";
+import {error} from "util";
 
 @Component({
   selector: 'app-dashboard-item-search',
@@ -22,6 +23,8 @@ export class DashboardItemSearchComponent implements OnInit {
   eventdata=[];
   programdata=[];
   totalCount:number
+  loadermessage:string;
+  loaderStatus:boolean;
   overallcontainer={
     indicatorsCount:0,
     dataSetsCount:0,
@@ -45,10 +48,8 @@ export class DashboardItemSearchComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    // this.searchService.getMessageCount().subscribe(count => {
-    //   console.log(count)
-    // });
+    this.loaderStatus=true;
+    this.loadermessage='Loading...';
     this.searchTerm$.subscribe(terms => {
       if(terms.match(/^[mM]/)) {
         this.searchService.getMessageCount()
@@ -79,7 +80,15 @@ export class DashboardItemSearchComponent implements OnInit {
         this.headers = this.getResultHeaders(this.overallcontainer);
         //console.log(this.headers);
         this.showBody = true;
-      });
+      },
+        error=>{
+          this.loadermessage='Failed to retrive metadata';
+        },
+        ()=>{
+          this.loaderStatus=false;
+        }
+
+      );
   }
 
   getResultHeaders(results): Array<any> {
