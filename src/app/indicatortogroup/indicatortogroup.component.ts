@@ -172,87 +172,92 @@ export class IndicatortogroupComponent implements OnInit {
   }
   ngOnInit() {
     //loading organisation units
-
     this.periods = this.filterService.getPeriodArray( this.period_type, this.year );
     this.orgunit_tree_config.loading = true;
-    // this.scorecardService.load(this.scorecardId).subscribe(
-    //   scorecard_details => {
-    //     this.scorecard = {
-    //       id: this.scorecardId,
-    //       name: scorecard_details.header.title,
-    //       data: scorecard_details
-    //     };
-    //     if (this.orgunitService.nodes == null) {
-    //       this.orgunitService.getOrgunitLevelsInformation()
-    //         .subscribe(
-    //           (data: any) => {
-    //             this.orgunitService.getUserInformation().subscribe(
-    //               userOrgunit => {
-    //                 let level = this.orgunitService.getUserHighestOrgUnitlevel(userOrgunit);
-    //                 let all_levels = data.pager.total;
-    //                 let orgunits = this.orgunitService.getuserOrganisationUnitsWithHighestlevel(level,userOrgunit);
-    //                 let use_level = parseInt(all_levels) - (parseInt(level) - 1);
-    //
-    //                 //load inital orgiunits to speed up loading speed
-    //                 this.orgunitService.getInitialOrgunitsForTree(orgunits).subscribe(
-    //                   (initial_data) => {
-    //                     //noinspection TypeScriptUnresolvedVariable
-    //                     this.orgUnit = {
-    //                       id: initial_data.organisationUnits[0].id,
-    //                       name: initial_data.organisationUnits[0].name,
-    //                       children: initial_data.organisationUnits[0].children
-    //                     };
-    //                     this.orgUnitlength = this.orgUnit.children.length+1;
-    //                     this.metadata_ready = true;
-    //                     //noinspection TypeScriptUnresolvedVariable
-    //                     this.organisationunits = initial_data.organisationUnits;
-    //                     this.activateNode(this.orgUnit.id, this.orgtree);
-    //                     this.orgunit_tree_config.loading = false;
-    //                     // after done loading initial organisation units now load all organisation units
-    //                     let fields = this.orgunitService.generateUrlBasedOnLevels(use_level);
-    //                     this.orgunitService.getAllOrgunitsForTree1(fields, orgunits).subscribe(
-    //                       items => {
-    //                         //noinspection TypeScriptUnresolvedVariable
-    //                         this.organisationunits = items.organisationUnits;
-    //                         //noinspection TypeScriptUnresolvedVariable
-    //                         this.orgunitService.nodes = items.organisationUnits;
-    //                         this.prepareOrganisationUnitTree(this.organisationunits, 'parent');
-    //                       },
-    //                       error => {
-    //                         console.log('something went wrong while fetching Organisation units');
-    //                         this.orgunit_tree_config.loading = false;
-    //                       }
-    //                     )
-    //                   },
-    //                   error => {
-    //                     console.log('something went wrong while fetching Organisation units');
-    //                     this.orgunit_tree_config.loading = false;
-    //                   }
-    //                 )
-    //
-    //               }
-    //             )
-    //           }
-    //         );
-    //     }
-    //     else {
-    //       this.orgunit_tree_config.loading = false;
-    //       console.log(this.orgunitService.nodes)
-    //       this.default_orgUnit = [this.orgunitService.nodes[0].id];
-    //       this.orgUnit = {
-    //         id: this.orgunitService.nodes[0].id,
-    //         name: this.orgunitService.nodes[0].name,
-    //         children: this.orgunitService.nodes[0].children
-    //       };
-    //       this.orgUnitlength = this.orgUnit.children.length+1;
-    //       this.organisationunits = this.orgunitService.nodes;
-    //       this.activateNode(this.orgUnit.id, this.orgtree);
-    //       this.prepareOrganisationUnitTree(this.organisationunits, 'parent');
-    //       // TODO: make a sort level information dynamic
-    //       this.metadata_ready = true;
-    //       // this.loadScoreCard();
-    //     }
-    //   });
+    if (this.orgunitService.nodes == null) {
+          this.orgunitService.getOrgunitLevelsInformation()
+            .subscribe(
+              (data: any) => {
+                this.orgunitService.getUserInformation().subscribe(
+                  userOrgunit => {
+                    let level = this.orgunitService.getUserHighestOrgUnitlevel(userOrgunit);
+                    let all_levels = data.pager.total;
+                    let orgunits = this.orgunitService.getuserOrganisationUnitsWithHighestlevel(level,userOrgunit);
+                    let use_level = parseInt(all_levels) - (parseInt(level) - 1);
+
+                    //load inital orgiunits to speed up loading speed
+                    this.orgunitService.getInitialOrgunitsForTree(orgunits).subscribe(
+                      (initial_data) => {
+                        //noinspection TypeScriptUnresolvedVariable
+                        this.orgUnit = {
+                          id: initial_data.organisationUnits[0].id,
+                          name: initial_data.organisationUnits[0].name,
+                          children: initial_data.organisationUnits[0].children
+                        };
+                        this.orgUnitlength = this.orgUnit.children.length+1;
+                        this.metadata_ready = true;
+                        //noinspection TypeScriptUnresolvedVariable
+                        this.organisationunits = initial_data.organisationUnits;
+                        this.activateNode(this.orgUnit.id, this.orgtree);
+                        this.orgunit_tree_config.loading = false;
+                        // after done loading initial organisation units now load all organisation units
+                        let fields = this.orgunitService.generateUrlBasedOnLevels(use_level);
+                        this.orgunitService.getAllOrgunitsForTree1(fields, orgunits).subscribe(
+                          items => {
+                            //noinspection TypeScriptUnresolvedVariable
+                            this.organisationunits = items.organisationUnits;
+                            //noinspection TypeScriptUnresolvedVariable
+                            this.orgunitService.nodes = items.organisationUnits;
+                            this.prepareOrganisationUnitTree(this.organisationunits, 'parent');
+                          },
+                          error => {
+                            console.log('something went wrong while fetching Organisation units');
+                            this.orgunit_tree_config.loading = false;
+                          }
+                        )
+                      },
+                      error => {
+                        console.log('something went wrong while fetching Organisation units');
+                        this.orgunit_tree_config.loading = false;
+                      }
+                    )
+
+                  }
+                )
+              },
+              error=>{},
+              ()=>{
+                this.metadata_ready = true;
+              }
+            );
+
+        }
+        else {
+          this.orgunit_tree_config.loading = false;
+          console.log(this.orgunitService.nodes)
+          this.default_orgUnit = [this.orgunitService.nodes[0].id];
+          this.orgUnit = {
+            id: this.orgunitService.nodes[0].id,
+            name: this.orgunitService.nodes[0].name,
+            children: this.orgunitService.nodes[0].children
+          };
+          this.orgUnitlength = this.orgUnit.children.length+1;
+          this.organisationunits = this.orgunitService.nodes;
+          this.activateNode(this.orgUnit.id, this.orgtree);
+          this.prepareOrganisationUnitTree(this.organisationunits, 'parent');
+          // TODO: make a sort level information dynamic
+          this.metadata_ready = true;
+          // this.loadScoreCard();
+        }
+    // pass the route parameter to indicator-card when loading that card using the commented line below
+
+
+    // this.subscription=this.activatedRouter.params.subscribe(
+    //   (params:any)=> {
+    //     this.metadataUid = params['metadataid'];
+    //     console.log(this.metadataUid);
+    //     this.selected_indicator.push(this.metadataUid)
+    //   })
 
   }
 
