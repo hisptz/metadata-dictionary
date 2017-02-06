@@ -26,6 +26,7 @@ import {Ng2DhisVisualizerComponent} from "./ng2-dhis-visualizer/ng2-dhis-visuliz
 import {DataService} from "./shared/data.service";
 import {IndicatorCardComponent} from "./indicator-card/indicator-card.component";
 import {TreeModule} from "angular2-tree-component/dist/angular2-tree-component";
+import {OrgUnitService} from "./shared/org-unit.service";
 const routes: Routes = [
   { path: '', component: HomeComponent , pathMatch: 'full', children:[
     { path: '', component:IndicatorgroupsComponent},
@@ -62,7 +63,7 @@ const routes: Routes = [
     ChartModule
 
   ],
-  providers: [IndicatorService,CanActivateViaIndicators,Constants,DashboardSearchService,FilterService,VisulizerService,DataService],
+  providers: [IndicatorService,CanActivateViaIndicators,Constants,DashboardSearchService,FilterService,VisulizerService,DataService,OrgUnitService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
