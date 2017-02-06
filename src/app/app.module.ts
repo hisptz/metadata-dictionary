@@ -22,6 +22,7 @@ import {FilterService} from "./shared/filter.service";
 import {VisulizerService} from "./ng2-dhis-visualizer/visulizer.service";
 import {Ng2DhisVisualizerComponent} from "./ng2-dhis-visualizer/ng2-dhis-visulizer.component";
 import {DataService} from "./shared/data.service";
+import {IndicatorCardComponent} from "./indicator-card/indicator-card.component";
 const routes: Routes = [
   { path: '', component: HomeComponent , pathMatch: 'full', children:[
     { path: '', component:IndicatorgroupsComponent},
@@ -43,7 +44,8 @@ const routes: Routes = [
     DashboardItemSearchComponent,
     ReadableNamePipe,
     TruncatePipe,
-    Ng2DhisVisualizerComponent
+    Ng2DhisVisualizerComponent,
+    IndicatorCardComponent
 
   ],
   imports: [
