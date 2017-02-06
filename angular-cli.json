@@ -14,7 +14,8 @@
         "balls-3.svg",
         "balls-4.svg",
         "balls-5.svg",
-        "ind.png"
+        "ind.png",
+        "manifest.webapp"
       ],
       "index": "index.html",
       "main": "main.ts",

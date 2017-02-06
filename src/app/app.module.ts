@@ -49,7 +49,6 @@ const routes: Routes = [
     TruncatePipe,
     Ng2DhisVisualizerComponent,
     IndicatorCardComponent
-
   ],
   imports: [
     BrowserModule,
