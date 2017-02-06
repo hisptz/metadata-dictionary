@@ -21,6 +21,7 @@ import {TruncatePipe} from "./shared/pipes/truncate.pipe";
 import {FilterService} from "./shared/filter.service";
 import {VisulizerService} from "./ng2-dhis-visualizer/visulizer.service";
 import {Ng2DhisVisualizerComponent} from "./ng2-dhis-visualizer/ng2-dhis-visulizer.component";
+import {DataService} from "./shared/data.service";
 const routes: Routes = [
   { path: '', component: HomeComponent , pathMatch: 'full', children:[
     { path: '', component:IndicatorgroupsComponent},
@@ -53,7 +54,7 @@ const routes: Routes = [
     Ng2PaginationModule,
 
   ],
-  providers: [IndicatorService,CanActivateViaIndicators,Constants,DashboardSearchService,FilterService,VisulizerService],
+  providers: [IndicatorService,CanActivateViaIndicators,Constants,DashboardSearchService,FilterService,VisulizerService,DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

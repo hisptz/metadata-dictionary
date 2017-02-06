@@ -20,8 +20,20 @@
   </div>
 </div>
 <div class="row" style="margin: 20px">
-  <div class="col-sm-offset-2 col-sm-8">
-  <app-metadata-dictionary [metadataidentifiers]="metadataUid"></app-metadata-dictionary>
-  </div>
+  <indicator-card
+    [orgunit_nodes]="organisationunits"
+    [current_period_type]="period_type"
+    [current_year]="year"
+    [indicator]="selected_indicator"
+    [default_period]="period"
+    [default_period_type]="period_type"
+    [default_orgunit] = "orgunit_for_model"
+    [hidden_columns] = "hidenColums"
+    (show_details) = "getDetails($event)"
+  >Loading ....
+  </indicator-card>
+  <!--<div class="col-sm-offset-2 col-sm-8">-->
+  <!--<app-metadata-dictionary [metadataidentifiers]="metadataUid"></app-metadata-dictionary>-->
+  <!--</div>-->
 </div>
 
