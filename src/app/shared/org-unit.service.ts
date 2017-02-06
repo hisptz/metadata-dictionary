@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import 'rxjs/Rx';
 import {Observable} from 'rxjs';
-import {Constants} from "../costants";
+import {Constants} from "./costants";
 
 @Injectable()
 export class OrgUnitService {
