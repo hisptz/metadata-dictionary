@@ -8,6 +8,8 @@ import { IndicatorgroupsComponent } from './indicatorgroups/indicatorgroups.comp
 import {IndicatorService} from "./shared/indicator.service";
 import {Ng2PaginationModule} from "ng2-pagination";
 import { SearchPipe } from './shared/search.pipe';
+import {Ng2HighchartsModule} from "ng2-highcharts";
+import {ChartModule} from "angular2-highcharts";
 import {Routes, PreloadAllModules, RouterModule} from "@angular/router";
 import { IndicatortogroupComponent } from './indicatortogroup/indicatortogroup.component';
 import {CanActivateViaIndicators} from "./shared/can-activate-via-indicators";
@@ -23,6 +25,7 @@ import {VisulizerService} from "./ng2-dhis-visualizer/visulizer.service";
 import {Ng2DhisVisualizerComponent} from "./ng2-dhis-visualizer/ng2-dhis-visulizer.component";
 import {DataService} from "./shared/data.service";
 import {IndicatorCardComponent} from "./indicator-card/indicator-card.component";
+import {TreeModule} from "angular2-tree-component/dist/angular2-tree-component";
 const routes: Routes = [
   { path: '', component: HomeComponent , pathMatch: 'full', children:[
     { path: '', component:IndicatorgroupsComponent},
@@ -52,8 +55,11 @@ const routes: Routes = [
     BrowserModule,
     FormsModule,
     HttpModule,
+    TreeModule,
     RouterModule.forRoot(routes, { useHash: true}),
     Ng2PaginationModule,
+    Ng2HighchartsModule,
+    ChartModule
 
   ],
   providers: [IndicatorService,CanActivateViaIndicators,Constants,DashboardSearchService,FilterService,VisulizerService,DataService],
