@@ -6,11 +6,11 @@
       </h4>
     </div>
     <div class="col-sm-6">
-       <div class="row" style="margin: 20px" *ngIf="loading">
-        <div class="text-center">
-          <img src="balls-5.svg" style="padding-top: 80px; height: 190px;">
-        </div>
-      </div>
+       <!--<div class="row" style="margin: 20px" *ngIf="loading">-->
+        <!--<div class="text-center">-->
+          <!--<img src="balls-5.svg" style="padding-top: 80px; height: 190px;">-->
+        <!--</div>-->
+      <!--</div>-->
       <app-dashboard-item-search></app-dashboard-item-search>
     </div>
     <div class="col-sm-4">
@@ -19,7 +19,7 @@
 
   </div>
 </div>
-<div class="row" style="margin: 20px">
+<div class="row" style="margin: 20px" *ngIf="metadata_ready">
   <indicator-card
     [orgunit_nodes]="organisationunits"
     [current_period_type]="period_type"
@@ -28,6 +28,7 @@
     [default_period]="period"
     [default_period_type]="period_type"
     [default_orgunit] = "orgunit_for_model"
+    [hidden_columns] = "hidenColums"
   >Loading ....
   </indicator-card>
   <!--<div class="col-sm-offset-2 col-sm-8">-->

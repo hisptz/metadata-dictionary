@@ -30,6 +30,7 @@ export class IndicatorService {
    return Observable.forkJoin(indicators,dataElements,dataSets,eventData,programIndicator)
        .catch(this.handleError)
   }
+
   private handleError (error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure
     let errMsg: string;
