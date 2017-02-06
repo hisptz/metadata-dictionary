@@ -94,12 +94,6 @@ export class IndicatortogroupComponent implements OnInit {
 
   show_details:boolean = false;
 
-  @ViewChild('orgtree')
-  orgtree: TreeComponent;
-
-  @ViewChild('pertree')
-  pertree: TreeComponent;
-
   // @ViewChild(ScorecardComponent)
   // private childScoreCard: ScorecardComponent;
 
@@ -134,6 +128,7 @@ export class IndicatortogroupComponent implements OnInit {
     this.subscription = this.activatedRouter.params.subscribe(
       (params: any) => {
         this.scorecardId = params['metadataid'];
+        this.selected_indicator.push(this.scorecardId);
         // this.scorecard = this.getEmptyScoreCard();
       });
     this.periods = this.filterService.getPeriodArray( this.period_type, this.year );
@@ -195,11 +190,12 @@ export class IndicatortogroupComponent implements OnInit {
                           children: initial_data.organisationUnits[0].children
                         };
                         this.orgUnitlength = this.orgUnit.children.length+1;
-                        this.metadata_ready = true;
+                        //noinspection TypeScriptUnresolvedVariable
+                        console.log(initial_data.organisationUnits)
                         //noinspection TypeScriptUnresolvedVariable
                         this.organisationunits = initial_data.organisationUnits;
-                        this.activateNode(this.orgUnit.id, this.orgtree);
                         this.orgunit_tree_config.loading = false;
+                        this.metadata_ready = true;
                         // after done loading initial organisation units now load all organisation units
                         let fields = this.orgunitService.generateUrlBasedOnLevels(use_level);
                         this.orgunitService.getAllOrgunitsForTree1(fields, orgunits).subscribe(
@@ -225,10 +221,7 @@ export class IndicatortogroupComponent implements OnInit {
                   }
                 )
               },
-              error=>{},
-              ()=>{
-                this.metadata_ready = true;
-              }
+              error=>{}
             );
 
         }
@@ -243,7 +236,6 @@ export class IndicatortogroupComponent implements OnInit {
           };
           this.orgUnitlength = this.orgUnit.children.length+1;
           this.organisationunits = this.orgunitService.nodes;
-          this.activateNode(this.orgUnit.id, this.orgtree);
           this.prepareOrganisationUnitTree(this.organisationunits, 'parent');
           // TODO: make a sort level information dynamic
           this.metadata_ready = true;
@@ -262,7 +254,7 @@ export class IndicatortogroupComponent implements OnInit {
   }
 
   ngAfterViewInit(){
-    this.activateNode(this.period.id, this.pertree);
+
   }
 
   prepareOrganisationUnitTree(organisationUnit,type:string='top') {
@@ -315,29 +307,6 @@ export class IndicatortogroupComponent implements OnInit {
 
 
   //setting the period to next or previous
-  setPeriod(type){
-    if(type == "down"){
-      this.periods = this.filterService.getPeriodArray(this.period_type, this.filterService.getLastPeriod(this.period.id,this.period_type).substr(0,4));
-      this.activateNode(this.filterService.getLastPeriod(this.period.id,this.period_type), this.pertree);
-      this.period = {
-        id:this.filterService.getLastPeriod(this.period.id,this.period_type),
-        name:this.getPeriodName(this.filterService.getLastPeriod(this.period.id,this.period_type))
-      };
-
-    }
-    if(type == "up"){
-      this.periods = this.filterService.getPeriodArray(this.period_type, this.filterService.getNextPeriod(this.period.id,this.period_type).substr(0,4));
-      this.activateNode(this.filterService.getNextPeriod(this.period.id,this.period_type), this.pertree);
-      this.period = {
-        id:this.filterService.getNextPeriod(this.period.id,this.period_type),
-        name:this.getPeriodName(this.filterService.getNextPeriod(this.period.id,this.period_type))
-      };
-
-    }
-    setTimeout(() => {
-      this.loadScoreCard()
-    }, 5);
-  }
 
   getPeriodName(id){
     for ( let period of this.filterService.getPeriodArray(this.period_type, this.filterService.getLastPeriod(id,this.period_type).substr(0,4))){

@@ -152,16 +152,6 @@
     </div>
   </div>
   <div class="col-sm-12" style="padding-left: 5px">
-    <label
-      *ngIf="indicator.length == 1 && getIndicatorLength(indicator[0])"
-      style="cursor: pointer">
-      <input
-        type="checkbox"
-        [(ngModel)]="showBottleneck"
-        (change)="updateIndicatorCard(indicator, current_visualisation, card_selected_periods, card_selected_orgunits)">
-      Bottleneck Analysis
-    </label>
-
 
     <label *ngIf="visualizer_config.type == 'chart'">
       &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" [(ngModel)]="show_labels" (change)="updateIndicatorCard(indicator,current_visualisation, card_selected_periods, card_selected_orgunits, false, show_labels)">

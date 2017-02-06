@@ -144,7 +144,7 @@ export class IndicatorCardComponent implements OnInit, AfterViewInit, OnDestroy 
   // a call that will change the view type
   details_indicators: string = '';
   updateIndicatorCard( holders: any[], type: string, periods: any[], orgunits: any[], with_children:boolean = false, show_labels:boolean = false ){
-    console.log("Orgunits:", orgunits);
+    console.log("Orgunits:", holders);
     this.loading = true;
     this.chartData = {};
     this.current_visualisation = (type != 'csv')?type:this.current_visualisation;
@@ -158,31 +158,9 @@ export class IndicatorCardComponent implements OnInit, AfterViewInit, OnDestroy 
 
     // check first if your supposed to load bottleneck indicators too for analysis
     let config_array = this.chart_settings.split( "-" );
-    if( this.showBottleneck ){
-      for ( let holder of holders ){
-        for ( let item of holder.indicators ){
-          if( this.hidden_columns.indexOf( item.id ) == -1){
-            // indicatorsArray.push( item.id );
-            if( item.hasOwnProperty("bottleneck_indicators") ){
-              for( let bottleneck of item.bottleneck_indicators ){
-                indicatorsArray.push( bottleneck.id );
-              }
-            }
-          }
-        }
-      }
-      config_array[1] = 'dx';
-      config_array[0] = 'ou';
-      type = "column";
-      this.visualizer_config.type = 'chart';
-    }else{
-      for ( let holder of holders ){
-        for ( let item of holder.indicators ){
-          if( this.hidden_columns.indexOf( item.id ) == -1){
-            indicatorsArray.push( item.id );
-          }
-        }
-      }
+
+    for ( let holder of holders ){
+      indicatorsArray.push( holder );
     }
 
 
@@ -491,16 +469,7 @@ export class IndicatorCardComponent implements OnInit, AfterViewInit, OnDestroy 
 
 
   prepareCardTitle(holders_array: any[]): string{
-    let indicators_title = [];
-    for ( let holder of holders_array ){
-      for ( let indicator of holder.indicators ){
-        if( this.hidden_columns.indexOf(indicator.id) == -1){
-          indicators_title.push(indicator.name);
-        }
-      }
-    }
-    return (this.showBottleneck)?indicators_title.join(", ")+" Bottleneck Indicators ":indicators_title.join(", ");
-
+    return holders_array[0]
   }
 
   // handle errors from requests
